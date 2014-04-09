@@ -21,6 +21,7 @@ namespace SnakeOnAGame
         Vector2 pellet = new Vector2(2, 2);
         List<Vector2> snake = new List<Vector2>();
         Texture2D snakeTexture;
+        Vector2 Velocity = new Vector2(0, -1);
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -76,9 +77,29 @@ namespace SnakeOnAGame
 
             // TODO: Add your update logic here
 
+            KeyboardState kb = Keyboard.GetState();
+            if (kb.IsKeyDown(Keys.Up))
+            {
+                snake[0] += Velocity;
+            }
+            else if (kb.IsKeyDown(Keys.Down))
+            {
+                Velocity = new Vector2(0, 1);
+                snake[0] += Velocity;
+            }
+            else if (kb.IsKeyDown(Keys.Left))
+            {
+                Velocity = new Vector2(-1, 0);
+                snake[0] += Velocity;
+            }
+            else if (kb.IsKeyDown(Keys.Right))
+            {
+                Velocity = new Vector2(1, 0);
+                snake[0] += Velocity;
+            }
             base.Update(gameTime);
         }
-
+ 
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -89,7 +110,9 @@ namespace SnakeOnAGame
 
             for (int i = 0; i < snake.Count; i++)
             {
+                spriteBatch.Begin();
                 spriteBatch.Draw(snakeTexture, snake[i] * 10, Color.Red);
+                spriteBatch.End();
             }
             // TODO: Add your drawing code here
 
