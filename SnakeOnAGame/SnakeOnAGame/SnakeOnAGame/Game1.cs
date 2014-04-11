@@ -78,26 +78,29 @@ namespace SnakeOnAGame
             // TODO: Add your update logic here
 
             KeyboardState kb = Keyboard.GetState();
+            
+            
             if (kb.IsKeyDown(Keys.Up))
             {
                 Velocity = new Vector2(0, -1);
-                snake[0] += Velocity;
             }
             else if (kb.IsKeyDown(Keys.Down))
             {
                 Velocity = new Vector2(0, 1);
-                snake[0] += Velocity;
             }
             else if (kb.IsKeyDown(Keys.Left))
             {
                 Velocity = new Vector2(-1, 0);
-                snake[0] += Velocity;
             }
             else if (kb.IsKeyDown(Keys.Right))
             {
                 Velocity = new Vector2(1, 0);
-                snake[0] += Velocity;
             }
+
+            
+            snake[0] += Velocity;
+            
+            
             base.Update(gameTime);
         }
  
