@@ -19,13 +19,14 @@ namespace SnakeOnAGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Vector2 pellet = new Vector2(2, 2);
+        Texture2D pelletTexture;
         List<Vector2> snake = new List<Vector2>();
         Texture2D snakeTexture;
         Vector2 Velocity = new Vector2(0, -1);
         Random rand = new Random();
 
         float snakeMovementTimer = 0f;
-        float snakeMovementTime = 30f;
+        float snakeMovementTime = 60f;
 
         public Game1()
         {
@@ -57,6 +58,7 @@ namespace SnakeOnAGame
 
             snake.Add(new Vector2(40, 24));
             snakeTexture = Content.Load<Texture2D>(@"snake");
+            pelletTexture = Content.Load<Texture2D>(@"pellet");
             // TODO: use this.Content to load your game content here
         }
 
@@ -108,8 +110,11 @@ namespace SnakeOnAGame
                 snake[0] += Velocity;
                 snakeMovementTimer = 0f;
             }
-            
 
+            if (snake[0] == pellet)
+            {
+                snake.Add(new Vector2(12, 12));
+            }
 
             
             base.Update(gameTime);
@@ -126,7 +131,8 @@ namespace SnakeOnAGame
             for (int i = 0; i < snake.Count; i++)
             {
                 spriteBatch.Begin();
-                spriteBatch.Draw(snakeTexture, snake[i] * 10, Color.Red);
+                spriteBatch.Draw(snakeTexture, snake[i] * 16, Color.Red);
+                spriteBatch.Draw(pelletTexture, pellet * 16, Color.Yellow);
                 spriteBatch.End();
             }
             // TODO: Add your drawing code here
