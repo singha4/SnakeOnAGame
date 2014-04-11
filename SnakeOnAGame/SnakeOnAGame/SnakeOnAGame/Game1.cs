@@ -114,6 +114,8 @@ namespace SnakeOnAGame
             if (snake[0] == pellet)
             {
                 snake.Add(new Vector2(12, 12));
+                pellet.X = rand.Next(5, 53);
+                pellet.Y = rand.Next(5, 50);
             }
 
             
