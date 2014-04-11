@@ -22,6 +22,11 @@ namespace SnakeOnAGame
         List<Vector2> snake = new List<Vector2>();
         Texture2D snakeTexture;
         Vector2 Velocity = new Vector2(0, -1);
+        Random rand = new Random();
+
+        float snakeMovementTimer = 0f;
+        float snakeMovementTime = 30f;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -97,9 +102,15 @@ namespace SnakeOnAGame
                 Velocity = new Vector2(1, 0);
             }
 
+            snakeMovementTimer += (float)gameTime.ElapsedGameTime.Milliseconds;
+            if (snakeMovementTimer > snakeMovementTime)
+            {
+                snake[0] += Velocity;
+                snakeMovementTimer = 0f;
+            }
             
-            snake[0] += Velocity;
-            
+
+
             
             base.Update(gameTime);
         }
