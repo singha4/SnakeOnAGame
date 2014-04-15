@@ -87,19 +87,19 @@ namespace SnakeOnAGame
             KeyboardState kb = Keyboard.GetState();
             
             
-            if (kb.IsKeyDown(Keys.Up))
+            if (kb.IsKeyDown(Keys.Up) && Velocity.Y != 1)
             {
                 Velocity = new Vector2(0, -1);
             }
-            else if (kb.IsKeyDown(Keys.Down))
+            else if (kb.IsKeyDown(Keys.Down) && Velocity.Y != -1)
             {
                 Velocity = new Vector2(0, 1);
             }
-            else if (kb.IsKeyDown(Keys.Left))
+            else if (kb.IsKeyDown(Keys.Left) && Velocity.X != 1)
             {
                 Velocity = new Vector2(-1, 0);
             }
-            else if (kb.IsKeyDown(Keys.Right))
+            else if (kb.IsKeyDown(Keys.Right) && Velocity.X != -1)
             {
                 Velocity = new Vector2(1, 0);
             }
@@ -107,15 +107,28 @@ namespace SnakeOnAGame
             snakeMovementTimer += (float)gameTime.ElapsedGameTime.Milliseconds;
             if (snakeMovementTimer > snakeMovementTime)
             {
+                for (int i = snake.Count - 1; i > 0; i--)
+                {
+                    snake[i] = snake[i - 1];
+                }
+
                 snake[0] += Velocity;
                 snakeMovementTimer = 0f;
+
+                for (int i = 1; i < snake.Count; i++)
+                {
+                    if (snake[0] == snake[i])
+                    {
+                        this.Exit();
+                    }
+                }
             }
 
             if (snake[0] == pellet)
             {
-                snake.Add(new Vector2(12, 12));
-                pellet.X = rand.Next(5, 53);
-                pellet.Y = rand.Next(5, 50);
+                snake.Add(snake[0]);
+                pellet.X = rand.Next(5, 48);
+                pellet.Y = rand.Next(5, 28);
             }
 
             
@@ -134,7 +147,7 @@ namespace SnakeOnAGame
             {
                 spriteBatch.Begin();
                 spriteBatch.Draw(snakeTexture, snake[i] * 16, Color.Red);
-                spriteBatch.Draw(pelletTexture, pellet * 16, Color.Yellow);
+                spriteBatch.Draw(snakeTexture, pellet * 16, Color.Yellow);
                 spriteBatch.End();
             }
             // TODO: Add your drawing code here
