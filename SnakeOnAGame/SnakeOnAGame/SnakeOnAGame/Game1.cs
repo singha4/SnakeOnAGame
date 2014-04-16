@@ -24,6 +24,7 @@ namespace SnakeOnAGame
         Texture2D snakeTexture;
         Vector2 Velocity = new Vector2(0, -1);
         Random rand = new Random();
+        int playerScore = 0;
 
         float snakeMovementTimer = 0f;
         float snakeMovementTime = 60f;
@@ -129,7 +130,9 @@ namespace SnakeOnAGame
                 snake.Add(snake[0]);
                 pellet.X = rand.Next(5, 48);
                 pellet.Y = rand.Next(5, 28);
+                playerScore++;
             }
+            this.Window.Title = "Score : " + playerScore.ToString();
 
             
             base.Update(gameTime);
